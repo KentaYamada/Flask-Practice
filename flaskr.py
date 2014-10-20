@@ -28,7 +28,7 @@ def connect_db():
 def init_db():
     with closing(connect_db()) as db:
         with app.open_resource('schema.sql') as f:
-            db.cursor().executescript(f.read().decode('utf-8'))
+            db.cursor().executescript(f.read().decode('utf-8')) #Windows上でErrorになるためデコード対応
         db.commit()
 
 
@@ -77,7 +77,7 @@ def login():
             error='パスワードはそれやない'
         else:
             session['logged_in'] = True
-            #flash(u'ログインするで')
+            flash('ログインするで')
             return redirect(url_for('show_entries'))
     return render_template('login.html', error = error)
 
